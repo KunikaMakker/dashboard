@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Button } from '@material-ui/core';
+import { Grid, Button, Typography } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
 import Cards from '../Cards';
 import CustomCalendar from '../Calendar';
@@ -27,19 +27,19 @@ export default function dashboard(){
             <Grid item xs={12} sm={12}>
               <Grid container justify="center" spacing={3}>
                 <Grid item className={classes.cards}>
-                <Cards title="number" value="23"/>
+                <Cards title="Total Registered Students" value="27"/>
                 </Grid>
                 <Grid item className={classes.cards}>
-                <Cards title="number" value="23"/>
+                <Cards title="Assignments Uploaded" value="18"/>
                 </Grid>
                 <Grid item className={classes.cards}>
-                <Cards title="number" value="23"/>
+                <Cards title="Total Classes" value="217"/>
                 </Grid>
                 <Grid item className={classes.cards}>
-                <Cards title="number" value="23"/>
+                <Cards title="Next Class in" value="0 hours, 0 minutes"/>
                 </Grid>
                 <Grid item className={classes.cards}>
-                <Cards title="number" value="23"/>
+                <Cards title="Pending Students Request" value="0" button_name="View"/>
                 </Grid>
               </Grid>
             </Grid>
@@ -51,6 +51,7 @@ export default function dashboard(){
             <Icon>edit_icon</Icon>
           </Button>
         </div>
+          <Typography variant='h5'>Calendar</Typography>
           <CustomCalendar />
         </div>
     );

@@ -1,12 +1,15 @@
 import React from 'react';
 import moment from 'moment';
 import Calendar from './calendar';
+import Planner from '../Planner';
 import {getArray} from './utils';
+import { Grid } from '@material-ui/core';
 
 class CalendarContainer extends React.PureComponent {
-    
+
     state = {
         dateObject: moment(),
+        selectedDate: moment().format("D"),
     }
 
     previousMonth = () =>{
@@ -89,14 +92,26 @@ class CalendarContainer extends React.PureComponent {
         ...this.displayableNextMonthDays()
     ]
     render(){
+        console.log(
+            'in render'
+        );
         return(
-            <Calendar 
-                calendarDays={this.displayableDays} 
-                dateObject={this.state.dateObject}
-                previousMonth={this.previousMonth}
-                nextMonth={this.nextMonth}
-                selectedDay={this.selectedDay}
-                />
+            <Grid container spacing={3}>
+                <Grid item xs={7}>            
+                    <Calendar 
+                    calendarDays={this.displayableDays} 
+                    dateObject={this.state.dateObject}
+                    key={this.state.dateObject}
+                    previousMonth={this.previousMonth}
+                    nextMonth={this.nextMonth}
+                    selectedDay={this.selectedDay}
+                    />
+                </Grid>
+                <Grid item xs={5}>
+                    <Planner
+                    selectedDate={this.state.selectedDate} />
+                </Grid>
+            </Grid>
         );
     }
 }
