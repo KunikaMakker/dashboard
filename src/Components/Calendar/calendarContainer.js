@@ -4,21 +4,27 @@ import Calendar from './calendar';
 import Planner from '../Planner';
 import {getArray} from './utils';
 import { Grid } from '@material-ui/core';
+import _ from 'lodash';
 
 class CalendarContainer extends React.PureComponent {
 
     state = {
         dateObject: moment(),
         selectedDate: moment().format("D"),
+        dayIndex: moment().format("dddd")
     }
 
     previousMonth = () =>{
-        this.setState({dateObject: this.state.dateObject.subtract(1,"month")})
-        console.log('in previous month',this.state.dateObject.format("MMMM"), this.state.dateObject.format("Y"))
+        var prev = _.cloneDeep(this.state.dateObject);
+        prev = prev.subtract(1,"month");
+        this.setState({dateObject: prev })
+        console.log('in previous month',prev.format("MMMM"), this.state.dateObject.format("MMMM"), this.state.dateObject.format("Y"))
     }
 
     nextMonth = () =>{
-        this.setState({dateObject: this.state.dateObject.add(1,"month")})
+        var next =  _.cloneDeep(this.state.dateObject);
+        next = next.add(1,"month");
+        this.setState({dateObject: next})
         console.log('in next month',this.state.dateObject.format("MMMM"), this.state.dateObject.format("Y"))
     }
     
@@ -77,31 +83,58 @@ class CalendarContainer extends React.PureComponent {
         return dates;
     }
 
-    selectedDay = (e, d) => {
+    selectedDay = (e, day, index) => {
         this.setState({
-            selectedDate: d
+            selectedDate: day,
+            dayIndex: index,
         },
         () => {
-            console.log("selectedDate: ", this.state.selectedDate);
-        })
+            var dayName;
+            switch(this.state.dayIndex)
+            {
+                case 0:
+                    dayName = "Sunday"
+                    break;
+                case 1:
+                    dayName = "Monday"
+                    break;
+                case 2:
+                    dayName = "Tuesday"
+                    break;
+                case 3:
+                    dayName = "Wednesday"
+                    break;
+                case 4:
+                    dayName = "Thursday"
+                    break;
+                case 5:
+                    dayName = "Friday"
+                    break;
+                case 6:
+                    dayName = "Saturday"
+                    break;
+                default:
+                    dayName = "Invalid"
+                    break;
+            }
+            this.setState({dayIndex: dayName});
+        });
     }
 
-    displayableDays = [
-        ...this.displayableLastMonthDays(),
-        ...this.daysInCurrentMonth(),
-        ...this.displayableNextMonthDays()
-    ]
+    
     render(){
-        console.log(
-            'in render'
-        );
+        let displayableDays = [
+            ...this.displayableLastMonthDays(),
+            ...this.daysInCurrentMonth(),
+            ...this.displayableNextMonthDays()
+        ]
         return(
             <Grid container spacing={3}>
                 <Grid item xs={7}>            
                     <Calendar 
-                    calendarDays={this.displayableDays} 
-                    dateObject={this.state.dateObject}
-                    key={this.state.dateObject}
+                    calendarDays={displayableDays} 
+                    month={this.state.dateObject.format("MMMM")}
+                    year={this.state.dateObject.format("Y")}
                     previousMonth={this.previousMonth}
                     nextMonth={this.nextMonth}
                     selectedDay={this.selectedDay}
@@ -109,7 +142,11 @@ class CalendarContainer extends React.PureComponent {
                 </Grid>
                 <Grid item xs={5}>
                     <Planner
-                    selectedDate={this.state.selectedDate} />
+                    selectedDate={this.state.selectedDate}
+                    month={this.state.dateObject.format("MMMM")}
+                    year={this.state.dateObject.format("Y")}
+                    dayIndex={this.state.dayIndex}
+                     />
                 </Grid>
             </Grid>
         );

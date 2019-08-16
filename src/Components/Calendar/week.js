@@ -14,7 +14,7 @@ const Week = (props) => {
     return(
         <TableRow>
             {weekDays.map((day,index) => (
-                <TableCell key={index} onClick={e => selectedDay(e, day)}>{day}</TableCell>
+                <TableCell key={index} onClick={e => selectedDay(e, day, index)}>{day}</TableCell>
             ))}
         </TableRow>
     );

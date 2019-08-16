@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Button, Typography } from '@material-ui/core';
-import Icon from '@material-ui/core/Icon';
+import { Grid, Button, Typography, Icon } from '@material-ui/core';
 import Cards from '../Cards';
 import CustomCalendar from '../Calendar';
 
@@ -13,8 +12,13 @@ const useStyles = makeStyles(theme => ({
     cards :{
       width: '20%',
     },
-    themeColor :{
-      color: "#EF4538",
+    editButton :{
+      backgroundColor: "#EF4538",
+      color: "#fff",
+      paddingRight: "30px",
+      position: "fixed",
+      top: "150px",
+      right: "-30px"
     }
   }));
 
@@ -45,10 +49,8 @@ export default function dashboard(){
             </Grid>
           </Grid> 
           <div>
-            <Button color="secondary"
-            variant="contained"
-            >
-            <Icon>edit_icon</Icon>
+          <Button variant="contained" className={classes.editButton}>
+          <Icon>edit_icon</Icon>
           </Button>
         </div>
           <Typography variant='h5'>Calendar</Typography>
